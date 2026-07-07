@@ -4,9 +4,10 @@ Shopyra is a full-stack e-commerce web application built with React, Spring Boot
 
 ## Tech Stack
 
-- Frontend: React + Tailwind CSS
+- IDE : Eclipse 25-26
+- Frontend: React + Tailwind CSS + hTMl5
 - Backend: Java 17 + Spring Boot + Spring Data JPA
-- Database: MySQL
+- Database: MySQL workbench 8v
 - Testing : Postman(ApI testing) 
 
 > 🚧 Project currently under development.
