@@ -27,15 +27,21 @@ public class ProductService {
 		return productRepository.findById(id);
 	}
 	
-	public void checkProduct(Long id) {
-		Optional<Product> product = productRepository.findById(id);
+	public Product updateProduct(Long id, Product updateProduct) {
 		
-		if (product.isPresent()) {
-			System.out.println("Product Found");
-		} else {
-			System.out.println("Product Not Found");
-		}
+		Product existingProduct = productRepository.findById(id)
+			.orElseThrow( () -> new RuntimeException("Product not Found"));			
+		
+		existingProduct.setName(updateProduct.getName());
+		existingProduct.setDescription(updateProduct.getDescription());
+		existingProduct.setPrice(updateProduct.getPrice());
+		existingProduct.setStock(updateProduct.getStock());
+		
+		return productRepository.save(existingProduct);
 		
 	}
+	
+	
+	
 	
 }
