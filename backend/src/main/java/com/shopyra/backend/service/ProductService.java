@@ -31,7 +31,7 @@ public class ProductService {
 	public Product updateProduct(Long id, Product updateProduct) {
 		
 		Product existingProduct = productRepository.findById(id)
-			.orElseThrow( () -> new ProductNotFoundException("Product not Found with ID : "+id));			
+			.orElseThrow( () -> new ProductNotFoundException("Product not Found with ID :"+id));			
 		
 		existingProduct.setName(updateProduct.getName());
 		existingProduct.setDescription(updateProduct.getDescription());
@@ -42,7 +42,12 @@ public class ProductService {
 		
 	}
 	
-	
-	
-	
+	public void deleteProduct(Long id) {
+		
+		Product product = productRepository.findById(id)
+				.orElseThrow( () -> 
+						new ProductNotFoundException("Product not Found with ID : "+id));
+		
+		productRepository.delete(product);
+	}
 }
