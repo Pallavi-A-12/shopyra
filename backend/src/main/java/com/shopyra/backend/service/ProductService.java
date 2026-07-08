@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.shopyra.backend.entity.Product;
+import com.shopyra.backend.exception.ProductNotFoundException;
 import com.shopyra.backend.repository.ProductRepository;
 
 @Service
@@ -30,7 +31,7 @@ public class ProductService {
 	public Product updateProduct(Long id, Product updateProduct) {
 		
 		Product existingProduct = productRepository.findById(id)
-			.orElseThrow( () -> new RuntimeException("Product not Found"));			
+			.orElseThrow( () -> new ProductNotFoundException("Product not Found with ID : "+id));			
 		
 		existingProduct.setName(updateProduct.getName());
 		existingProduct.setDescription(updateProduct.getDescription());
