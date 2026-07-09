@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.shopyra.backend.dto.ProductDTO;
 import com.shopyra.backend.entity.Product;
 import com.shopyra.backend.exception.ProductNotFoundException;
 import com.shopyra.backend.service.ProductService;
@@ -28,15 +29,15 @@ public class ProductController {
 	private ProductService productService;
 	
 	@PostMapping
-	public ResponseEntity<Product> addProduct(@Valid @RequestBody Product product) {
+	public ResponseEntity<ProductDTO> addProduct(@Valid @RequestBody ProductDTO productDTO) {
 		
-		Product savedProduct = productService.saveProduct(product);
+		ProductDTO savedProduct = productService.saveProduct(productDTO);
 		
 		return new ResponseEntity<>(savedProduct, HttpStatus.CREATED);
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<Product>> getAllProducts() {
+	public ResponseEntity<List<ProductDTO>> getAllProducts() {
 		
 		return ResponseEntity.ok(productService.getAllProducts());
 	}
