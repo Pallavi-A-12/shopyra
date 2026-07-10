@@ -2,7 +2,6 @@ package com.shopyra.backend.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,22 +39,29 @@ public class ProductService {
 		return productDTOs;
 	}
 	
-	public Optional<Product> getProductById(Long id) {
-		return productRepository.findById(id);
+	public ProductDTO getProductById(Long id) {
+		
+		Product product = productRepository.findById(id)
+				.orElseThrow(() ->
+						new ProductNotFoundException("Product not found with ID : "+id));
+		
+		return convertToDTO(product);
+				
 	}
 	
-	public Product updateProduct(Long id, Product updateProduct) {
+	public ProductDTO updateProduct(Long id, ProductDTO updateProductDTO) {
 		
 		Product existingProduct = productRepository.findById(id)
 			.orElseThrow( () -> new ProductNotFoundException("Product not Found with ID :"+id));			
 		
-		existingProduct.setName(updateProduct.getName());
-		existingProduct.setDescription(updateProduct.getDescription());
-		existingProduct.setPrice(updateProduct.getPrice());
-		existingProduct.setStock(updateProduct.getStock());
+		existingProduct.setName(updateProductDTO.getName());
+		existingProduct.setDescription(updateProductDTO.getDescription());
+		existingProduct.setPrice(updateProductDTO.getPrice());
+		existingProduct.setStock(updateProductDTO.getStock());
 		
-		return productRepository.save(existingProduct);
+		Product updatedProduct = productRepository.save(existingProduct);
 		
+		return convertToDTO(updatedProduct);
 	}
 	
 	public void deleteProduct(Long id) {

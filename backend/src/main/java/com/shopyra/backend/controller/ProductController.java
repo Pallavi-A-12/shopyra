@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.shopyra.backend.dto.ProductDTO;
-import com.shopyra.backend.entity.Product;
-import com.shopyra.backend.exception.ProductNotFoundException;
 import com.shopyra.backend.service.ProductService;
 
 import jakarta.validation.Valid;
@@ -43,20 +41,21 @@ public class ProductController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Product> getProductById(@PathVariable Long id) {
+	public ResponseEntity<ProductDTO> getProductById(@PathVariable Long id) {
 		
-		Product product = productService.getProductById(id)
-	            .orElseThrow(() -> new ProductNotFoundException("Product not Found with ID : " + id));
-
-	    return ResponseEntity.ok(product);
+		
+	    return ResponseEntity.ok(productService.getProductById(id));
 	}
 	
 	@PutMapping("/{id}")
-	public Product updateProduct(@PathVariable Long id, 
-									@Valid @RequestBody Product product) {
+	public ResponseEntity<ProductDTO> updateProduct(
+			@PathVariable Long id,
+			@Valid @RequestBody ProductDTO productDTO) {
 		
-		return productService.updateProduct(id, product);
+		return ResponseEntity.ok(productService.updateProduct(id,  productDTO));
 	}
+	
+	
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deleteProduct(@PathVariable Long id) {
